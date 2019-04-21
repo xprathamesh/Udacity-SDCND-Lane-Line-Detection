@@ -38,22 +38,22 @@ Upon following my pipeline, here is a sample input being transformed into having
 ![Sample Input](./test_images/whiteCarLaneSwitch.jpg)
 
 2. Converting input images to greyscale
-![Sample Input](./test_images/whiteCarLaneSwitch-gray.jpg)
+![Converting input images to greyscale](./test_images/whiteCarLaneSwitch-gray.jpg)
 
 3. Applying Gaussian Blur to smoothen the image and reduce noise
-![Sample Input](./test_images/whiteCarLaneSwitch-gblur.jpg)
+![Applying Gaussian Blur to smoothen the image and reduce noise](./test_images/whiteCarLaneSwitch-gblur.jpg)
 
 4. Generating Canny Edges
-![Sample Input](./test_images/whiteCarLaneSwitch-canny.jpg)
+![Generating Canny Edges](./test_images/whiteCarLaneSwitch-canny.jpg)
 
 5. Generating Region of interest (ROI) by defining vertices of region
-![Sample Input](./test_images/whiteCarLaneSwitch-roi.jpg)
+![Generating Region of interest (ROI) by defining vertices of region](./test_images/whiteCarLaneSwitch-roi.jpg)
 
 6. Perform Hough transformation on ROI
-![Sample Input](./test_images/whiteCarLaneSwitch-hough-standard.jpg)
+![Perform Hough transformation on ROI](./test_images/whiteCarLaneSwitch-hough-standard.jpg)
 
 7. Drawing Hough transform lines on the input
-![Sample Input](./test_images/whiteCarLaneSwitch-with-edges-standard.jpg)
+![Drawing Hough transform lines on the input](./test_images/whiteCarLaneSwitch-with-edges-standard.jpg)
 
 Here, I came across the problem that the lines drawn on the image were not complete lines, and were not completely present on the immediate route of the vehicle.
 For this purpose, it was necessary to average out the lines from Hough transform and extrapolate them before drawing them onto the image.
@@ -63,10 +63,10 @@ I was'nt sure what sort of algorithm could be used here, as this was one of my f
 I created a seperate helper function called draw_average_extrapolated_lines() for performing this functionality. I created four lists to distinguish, x and y co-ordinates of left and right lane lines respectively. Later I calculated the slope of the lines generated from Hough Transform to detect if they were left/right lane related lines. I separated the cordinates of the lines according to their slopes (all the while ignoring very small slope lines, which could arise due to steep turns). Once the cordinates where seperated, I used the numpy polyfit function to fit values and provide best coefficients. Upon that I implemented the poly1d function to generate the linear equation of the lines. Using the fact that the range of y coordinate values for the lines would be from the image bottom upto somewhere below the halfpoint of the image, I used the OpenCV line drawing function to generate two lines whose Y coordinates followed this range and whose X cordinates where generated from the equation opbtained from the poly1d and polyfit functions earlier. This helped provide better lines to represent the lanes, as you can see below
 
 8. Perform Hough transformation on ROI along with averaging and extrapolation
-![Sample Input](./test_images/whiteCarLaneSwitch-hough.jpg)
+![Perform Hough transformation on ROI along with averaging and extrapolation](./test_images/whiteCarLaneSwitch-hough.jpg)
 
 9. Drawing Hough transform lines on the input
-![Sample Input](./test_images/whiteCarLaneSwitch-with-edges.jpg)
+![Drawing Hough transform lines on the input](./test_images/whiteCarLaneSwitch-with-edges.jpg)
 
 
 
